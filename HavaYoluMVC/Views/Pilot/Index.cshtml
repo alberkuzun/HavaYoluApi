@@ -1,0 +1,74 @@
+﻿@model IEnumerable<HavaYoluMVC.Models.MVCPilotmodel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Ekle")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.PilotAdi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PilotYas)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PilotTecrube)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UcakNo)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.PilotAdi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PilotYas)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PilotTecrube)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UcakNo)
+            </td>
+            <td>
+                <a href="@Url.Action("Ekle","Pilot",new { id=item.PilotNo})" class="btn btn-success"><i class="glyphicon glyphicon-pencil"></i>Güncelle</a>
+                <a onclick="Sil(@item.PilotNo)" class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i>Sil</a>
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+@section scripts{
+    <script>
+        $(function () {
+            var successMessage = '@TempData["SuccessMessage"]';
+            if (successMessage != '')
+                alertify.success(successMessage);
+
+
+
+        });
+
+        function Sil(id) {
+            alertify.confirm('silme işlemi', 'kayıtı silmek istermisiniz ?', function () {
+                window.location.href = '@Url.Action("Sil","Pilot")/' + id;}, null);
+        }
+
+
+    </script>
+
+}
+
